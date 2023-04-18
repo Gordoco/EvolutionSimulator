@@ -17,7 +17,7 @@ public class Blob : Agent
     private int FoodEaten = 0;
     private bool bReady = false;
     private GameObject CurrentFood;
-    private string[] potNames = {"lilCutie", "Fred", "Joe", "Sally", "BigCutie", "Angelina", "Jeffry"};
+    private string[] potNames = { "lilCutie", "Fred", "Joe", "Sally", "BigCutie", "Angelina", "Jeffry", "Keila", "Brandon", "Alden", "Jaydon", "Julissa", "Geneva", "Shakayla", "Kamron", "Hayden", "Dillion"};
 
     public override GType CreateGType(Gene[] initGenes)
     {
@@ -55,6 +55,7 @@ public class Blob : Agent
             CharacterController controller = GetComponent<CharacterController>();
             if (controller.isGrounded)
             {
+                if (Owner == null || (Blob_Simulator)Owner == null) return;
                 if (CurrentFood == null) CurrentFood = ((Blob_Simulator)Owner).GetFoodByViewDist(ViewDist, gameObject);
                 if (CurrentFood != null)
                 {
@@ -64,7 +65,6 @@ public class Blob : Agent
                 else
                 {
                     moveDirection = transform.forward;
-
                 }
                 moveDirection *= Speed;
                 moveDirection.y = 0;
@@ -79,7 +79,6 @@ public class Blob : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("TEST");
         if (collision.gameObject.GetComponent<Food>() != null)
         {
             Destroy(collision.gameObject);

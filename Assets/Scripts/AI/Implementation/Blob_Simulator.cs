@@ -34,6 +34,8 @@ public class Blob_Simulator : Simulator
 
     public GameObject GetFoodByViewDist(int ViewDist, GameObject Entity)
     {
+        float ClosestVal = (float)int.MaxValue;
+        GameObject ClosestObj = null;
         for (int i = Food.Count - 1; i >= 0; i--)
         {
             if (Food[i] == null)
@@ -41,9 +43,14 @@ public class Blob_Simulator : Simulator
                 Food.RemoveAt(i);
                 continue;
             }
-            if (Vector3.Distance(Entity.transform.position, Food[i].transform.position) <= (ViewDist)) return Food[i];
+            float Dist = Vector3.Distance(Entity.transform.position, Food[i].transform.position);
+            if (Dist <= ViewDist && Dist < ClosestVal)
+            {
+                ClosestObj = Food[i];
+                ClosestVal = Dist;
+            }
         }
-        return null;
+        return ClosestObj;
     }
 
     protected override bool CheckConvergence()
